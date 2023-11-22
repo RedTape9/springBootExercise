@@ -25,16 +25,12 @@ public class MessageController {
 
     @DeleteMapping("/api/messages/{id}")
     public ResponseEntity<String> deleteMessage(@PathVariable String id) {
-        messages.stream()
-                .filter(message -> message.getId().equals(id))
-                .findFirst()
-                .ifPresent(message -> messages.remove(message));
-        if(messages.stream().noneMatch(message -> message.getId().equals(id))) {
+        boolean removed = messages.removeIf(message -> message.getId().equals(id));
+        if (removed) {
             return ResponseEntity.ok("Nachricht gelöscht");
         } else {
             return ResponseEntity.ok("Nachricht nicht gefunden");
         }
-
     }
 
 
