@@ -29,7 +29,7 @@ public class MessageController {
                 .filter(message -> message.getId().equals(id))
                 .findFirst()
                 .ifPresent(message -> messages.remove(message));
-        if(messages.isEmpty()) {
+        if(messages.stream().noneMatch(message -> message.getId().equals(id))) {
             return ResponseEntity.ok("Nachricht gelöscht");
         } else {
             return ResponseEntity.ok("Nachricht nicht gefunden");
